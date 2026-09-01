@@ -21,6 +21,9 @@
     --line-strong: rgba(110,0,55,0.3);
     --focus: #1F5FA8;
     --logo-color: var(--berry);
+    --accent: var(--berry);
+    --accent-deep: var(--berry-deep);
+    --accent-bright: #8A0047;
     /* Fixed panel tokens: the pastel bento blocks are deliberately
        theme-invariant paper/sticky-note surfaces, so their text never
        swaps with the viewer's OS theme. */
@@ -46,6 +49,21 @@
     --line: rgba(251,237,243,0.14);
     --line-strong: rgba(242,142,180,0.35);
     --logo-color: #FF6782;
+  }
+
+  /* ---------- Strive by Inzicht: the sportief sub-brand ----------
+     Same logo, same fonts, same shared deep-teal "family" accent —
+     just their real neon-pink primary instead of Inzicht's berry.
+     Equal-specificity :root selector placed after the theme blocks
+     above so it wins in both light and dark, without needing a
+     separate dark-mode variant (neon-pink reads fine on both). */
+  :root[data-brand="strive"]{
+    --accent: #FF008D;
+    --accent-deep: #A3005A;
+    --accent-bright: #FF4FAE;
+    --logo-color: #FF008D;
+    --panel-ink: #212529;
+    --panel-ink-soft: #52585E;
   }
 
   *{ box-sizing: border-box; }
@@ -146,8 +164,8 @@
     position: relative;
     overflow: hidden;
   }
-  .panel-berry{
-    background: radial-gradient(120% 140% at 18% 0%, #8A0047 0%, var(--berry) 46%, var(--berry-deep) 100%);
+  .panel-accent{
+    background: radial-gradient(120% 140% at 18% 0%, var(--accent-bright) 0%, var(--accent) 46%, var(--accent-deep) 100%);
     color: var(--cream);
   }
   .panel-teal{
@@ -231,7 +249,7 @@
     text-transform: uppercase;
     font-size: 1.5rem;
     letter-spacing: 0.02em;
-    color: var(--berry);
+    color: var(--accent);
     margin-bottom: 10px;
   }
   .block--mint .tag{ color: var(--teal); }
@@ -241,7 +259,7 @@
     font-family: "Anton", sans-serif;
     font-size: 2.4rem;
     line-height: 1;
-    color: var(--berry);
+    color: var(--accent);
     opacity: 0.28;
     position: absolute;
     top: 26px;
@@ -276,10 +294,68 @@
     font-family: "Anton", sans-serif;
     text-transform: uppercase;
     font-size: clamp(1.3rem, 2.8vw, 1.7rem);
-    color: var(--berry);
+    color: var(--accent);
     line-height: 1.25;
     margin: 0 0 16px;
   }
+
+  /* ---------- Brand toggle ---------- */
+  .brandbar{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    padding: 14px 20px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .switch{
+    display: inline-flex;
+    background: var(--panel-base);
+    border: 1px solid var(--panel-line);
+    border-radius: 999px;
+    padding: 4px;
+    gap: 2px;
+  }
+  .switch button{
+    appearance: none;
+    border: none;
+    background: transparent;
+    padding: 9px 20px;
+    border-radius: 999px;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--panel-ink-soft);
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .switch button[aria-pressed="true"]{
+    background: var(--accent);
+    color: #fff;
+  }
+  .switch button:not([aria-pressed="true"]):hover{ color: var(--panel-ink); }
+
+  .brand-panel[hidden]{ display: none; }
+
+  /* ---------- Decorative brand illustrations ---------- */
+  .motif{ display: block; margin: 40px auto 0; opacity: 0.9; }
+  .motif svg{ display: block; width: 100%; height: auto; }
+
+  /* ---------- Example-image placeholder ---------- */
+  .shot{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    padding: 12px 14px;
+    border: 1.5px dashed var(--panel-line);
+    border-radius: 12px;
+    font-size: 0.85rem;
+    color: var(--panel-ink-soft);
+  }
+  .shot svg{ width: 20px; height: 20px; flex: none; color: var(--accent); }
 
   footer{
     padding: 34px 24px 46px;
@@ -288,6 +364,15 @@
     color: var(--ink-soft);
   }
 </style>
+
+<div class="brandbar">
+  <div class="switch" role="group" aria-label="Kies een voorstel">
+    <button type="button" id="btnInzicht" aria-pressed="true">Inzicht</button>
+    <button type="button" id="btnStrive" aria-pressed="false">Strive by Inzicht</button>
+  </div>
+</div>
+
+<div id="brand-inzicht" class="brand-panel">
 
 <header class="hero">
   <p class="eyebrow display">EEN CONTENTSTRATEGIE-VOORSTEL</p>
@@ -316,9 +401,18 @@
   </span>
   <p class="by">Voorgesteld door itsbyrune</p>
   <p class="scope">Dit voorstel staat los van het <b>Strive</b>-voorstel en richt zich specifiek op Inzicht zelf: de begeleiding voor de reguliere Examencommissie-studenten, <b>PLUS</b> en <b>MAX</b>.</p>
+  <span class="motif" style="width:min(60vw,220px); color:var(--accent);" aria-hidden="true">
+    <svg viewBox="0 0 220 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="196" cy="16" r="10" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+      <path d="M4 62c26-20 40-20 66 0" stroke="currentColor" stroke-width="2" opacity="0.35"/>
+      <path d="M70 62V34l24-18 24 18v28" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" opacity="0.75"/>
+      <path d="M86 62V44h16v18" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" opacity="0.75"/>
+      <path d="M118 62c30-14 46-14 78 0" stroke="currentColor" stroke-width="2" opacity="0.35"/>
+    </svg>
+  </span>
 </header>
 
-<section class="panel panel-berry" id="doel">
+<section class="panel panel-accent" id="doel">
   <div class="panel-inner">
     <p class="lead-in display">WAAR HET OM DRAAIT</p>
     <span class="sparkle" aria-hidden="true">
@@ -419,6 +513,163 @@
   </div>
 </section>
 
+</div>
+
+<div id="brand-strive" class="brand-panel" hidden>
+
+<header class="hero">
+  <p class="eyebrow display">EEN CONTENTSTRATEGIE-VOORSTEL</p>
+  <span class="sparkle twirl" aria-hidden="true">
+    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.3488 8.06625L9.1251 6.875L7.9376 3.64875C7.86728 3.45771 7.74005 3.29283 7.57307 3.17637C7.4061 3.0599 7.20743 2.99746 7.00385 2.99746C6.80027 2.99746 6.6016 3.0599 6.43462 3.17637C6.26765 3.29283 6.14042 3.45771 6.0701 3.64875L4.8751 6.875L1.64885 8.0625C1.45781 8.13282 1.29293 8.26005 1.17647 8.42702C1.06 8.594 0.997559 8.79267 0.997559 8.99625C0.997559 9.19983 1.06 9.3985 1.17647 9.56548C1.29293 9.73245 1.45781 9.85968 1.64885 9.93L4.8751 11.125L6.0626 14.3512C6.13292 14.5423 6.26015 14.7072 6.42712 14.8236C6.5941 14.9401 6.79277 15.0025 6.99635 15.0025C7.19993 15.0025 7.3986 14.9401 7.56557 14.8236C7.73255 14.7072 7.85978 14.5423 7.9301 14.3512L9.1251 11.125L12.3513 9.9375C12.5424 9.86718 12.7073 9.73995 12.8237 9.57298C12.9402 9.406 13.0026 9.20733 13.0026 9.00375C13.0026 8.80017 12.9402 8.6015 12.8237 8.43452C12.7073 8.26755 12.5424 8.14032 12.3513 8.07L12.3488 8.06625ZM8.5626 10.2638C8.49473 10.2888 8.4331 10.3282 8.38195 10.3793C8.3308 10.4305 8.29136 10.4921 8.26635 10.56L7.0001 13.9906L5.73635 10.5625C5.71138 10.4939 5.67169 10.4316 5.62008 10.38C5.56847 10.3284 5.50618 10.2887 5.4376 10.2638L2.00947 9L5.4376 7.73625C5.50618 7.71128 5.56847 7.67159 5.62008 7.61998C5.67169 7.56837 5.71138 7.50608 5.73635 7.4375L7.0001 4.00938L8.26385 7.4375C8.28886 7.50537 8.3283 7.567 8.37945 7.61815C8.4306 7.6693 8.49223 7.70874 8.5601 7.73375L11.9907 9L8.5626 10.2638ZM9.0001 2.5C9.0001 2.36739 9.05278 2.24021 9.14655 2.14645C9.24031 2.05268 9.36749 2 9.5001 2H10.5001V1C10.5001 0.867392 10.5528 0.740215 10.6465 0.646447C10.7403 0.552678 10.8675 0.5 11.0001 0.5C11.1327 0.5 11.2599 0.552678 11.3537 0.646447C11.4474 0.740215 11.5001 0.867392 11.5001 1V2H12.5001C12.6327 2 12.7599 2.05268 12.8537 2.14645C12.9474 2.24021 13.0001 2.36739 13.0001 2.5C13.0001 2.63261 12.9474 2.75979 12.8537 2.85355C12.7599 2.94732 12.6327 3 12.5001 3H11.5001V4C11.5001 4.13261 11.4474 4.25979 11.3537 4.35355C11.2599 4.44732 11.1327 4.5 11.0001 4.5C10.8675 4.5 10.7403 4.44732 10.6465 4.35355C10.5528 4.25979 10.5001 4.13261 10.5001 4V3H9.5001C9.36749 3 9.24031 2.94732 9.14655 2.85355C9.05278 2.75979 9.0001 2.63261 9.0001 2.5ZM15.5001 5.5C15.5001 5.63261 15.4474 5.75979 15.3537 5.85355C15.2599 5.94732 15.1327 6 15.0001 6H14.5001V6.5C14.5001 6.63261 14.4474 6.75979 14.3537 6.85355C14.2599 6.94732 14.1327 7 14.0001 7C13.8675 7 13.7403 6.94732 13.6465 6.85355C13.5528 6.75979 13.5001 6.63261 13.5001 6.5V6H13.0001C12.8675 6 12.7403 5.94732 12.6465 5.85355C12.5528 5.75979 12.5001 5.63261 12.5001 5.5C12.5001 5.36739 12.5528 5.24021 12.6465 5.14645C12.7403 5.05268 12.8675 5 13.0001 5H13.5001V4.5C13.5001 4.36739 13.5528 4.24021 13.6465 4.14645C13.7403 4.05268 13.8675 4 14.0001 4C14.1327 4 14.2599 4.05268 14.3537 4.14645C14.4474 4.24021 14.5001 4.36739 14.5001 4.5V5H15.0001C15.1327 5 15.2599 5.05268 15.3537 5.14645C15.4474 5.24021 15.5001 5.36739 15.5001 5.5Z" fill="currentColor"/></svg>
+  </span>
+  <h1 class="display" style="font-size:clamp(3.4rem, 11vw, 6.6rem); line-height:0.98; color:var(--accent);">Strive</h1>
+  <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-top:18px;">
+    <span style="font-size:0.95rem; color:var(--ink-soft); font-weight:600;">by</span>
+    <span class="logo" aria-label="Inzicht" style="width:96px; margin:0;">
+      <svg viewBox="0 0 108 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#heroLogoClipStrive)">
+          <path d="M100.022 23.7862V4.7416H97.2217V0.213844H107.536V4.7416H104.735V23.7862H100.022Z" fill="currentColor"/>
+          <path d="M84.3125 23.7862V0.213844H89.0006V8.63605H91.2255V0.213844H95.9136V23.7862H91.2255V13.098H89.0006V23.7862H84.3125Z" fill="currentColor"/>
+          <path d="M76.7867 24C75.08 24 73.7065 23.4695 72.6619 22.4044C71.6256 21.3434 71.1074 19.8547 71.1074 17.9465V7.07333C71.1074 4.78683 71.5598 3.03906 72.4604 1.82179C73.3692 0.608628 74.8497 0 76.8936 0C78.008 0 78.9991 0.205613 79.8668 0.616853C80.7428 1.02809 81.4296 1.64495 81.9313 2.46332C82.433 3.27758 82.6797 4.30157 82.6797 5.54352V9.6148H77.9916V6.13159C77.9916 5.42426 77.9011 4.95133 77.7243 4.71281C77.5474 4.46195 77.2678 4.33858 76.8936 4.33858C76.4577 4.33858 76.1616 4.49896 76.0094 4.81973C75.8572 5.13228 75.7832 5.55174 75.7832 6.07813V17.8766C75.7832 18.5305 75.8778 18.987 76.0629 19.2543C76.2603 19.5216 76.5358 19.6573 76.8936 19.6573C77.2966 19.6573 77.5762 19.4928 77.7366 19.1638C77.9052 18.8348 77.9916 18.403 77.9916 17.8766V13.6326H82.7332V18.0946C82.7332 20.1672 82.2109 21.6724 81.1664 22.61C80.1218 23.5394 78.6619 24.0041 76.7867 24.0041V24Z" fill="currentColor"/>
+          <path d="M64.8652 23.7862V0.213844H69.4177V23.7862H64.8652Z" fill="currentColor"/>
+          <path d="M53.1362 23.7862V19.501L58.6098 4.55243H53.1362V0.213844H63.5776V4.33859L58.0876 19.4476H63.3514V23.7862H53.1362Z" fill="currentColor"/>
+          <path d="M40.1699 23.7862V0.213844H45.0184L47.1898 11.5024V0.213844H51.7422V23.7862H47.1363L44.7799 12V23.7862H40.174H40.1699Z" fill="currentColor"/>
+          <path d="M33.7383 23.7862V0.213844H38.2907V23.7862H33.7383Z" fill="currentColor"/>
+          <path d="M23.2561 7.2167C22.4454 11.2705 20.4046 15.0056 17.4477 17.8997H6.04491C6.06802 17.7856 6.09248 17.6714 6.11899 17.558C8.41599 17.058 10.5771 16.0179 12.4011 14.511C14.9094 12.4383 16.6702 9.58496 17.3879 6.4429C17.4144 6.32945 17.4388 6.216 17.462 6.10186H6.05919H2.95076C1.32111 6.10118 0 4.78118 0 3.15207C0 1.52295 1.32111 0.202271 2.95076 0.202271H17.4932C17.8541 0.202271 18.2095 0.23488 18.5574 0.299419C19.9153 0.546708 21.1473 1.26547 22.0403 2.35449C22.5718 3.00261 22.951 3.74311 23.165 4.5271C23.4015 5.39261 23.4375 6.31111 23.2561 7.2167Z" fill="url(#strivePaint0)"/>
+          <path d="M23.5067 20.8487C23.5067 22.4778 22.1855 23.7985 20.5566 23.7985H6.01344C5.65258 23.7985 5.29716 23.7659 4.94921 23.7014C3.5914 23.4541 2.35931 22.7353 1.46633 21.6463C0.934897 20.9982 0.555689 20.2577 0.341619 19.4737C0.105123 18.6082 0.0691052 17.6897 0.250555 16.7841C1.0613 12.7303 3.1021 8.99519 6.05897 6.1011H17.4617C17.4386 6.21592 17.4142 6.32937 17.3877 6.44282C15.0907 6.94284 12.9296 7.98294 11.1056 9.48977C8.59722 11.5625 6.8371 14.4152 6.11878 17.5579C6.09227 17.6713 6.06781 17.7855 6.0447 17.8996H20.5566C22.1855 17.8996 23.5067 19.2196 23.5067 20.8487Z" fill="url(#strivePaint1)"/>
+        </g>
+        <defs>
+          <linearGradient id="strivePaint0" x1="11.6855" y1="20" x2="11.6855" y2="6.52715" gradientUnits="userSpaceOnUse"><stop stop-color="currentColor" stop-opacity="0"/><stop offset="1" stop-color="currentColor"/></linearGradient>
+          <linearGradient id="strivePaint1" x1="11.8212" y1="6" x2="11.8212" y2="23.291" gradientUnits="userSpaceOnUse"><stop stop-color="currentColor" stop-opacity="0"/><stop offset="1" stop-color="currentColor"/></linearGradient>
+          <clipPath id="heroLogoClipStrive"><rect width="107.535" height="24" fill="white"/></clipPath>
+        </defs>
+      </svg>
+    </span>
+  </div>
+  <p class="by">Voorgesteld door itsbyrune</p>
+  <p class="scope">Dit voorstel staat los van het <b>Inzicht</b>-voorstel (PLUS &amp; MAX) en richt zich specifiek op <b>Strive</b>: de begeleiding voor ambitieuze topsporters die hun sportschema en studie combineren.</p>
+  <span class="motif" style="width:min(60vw,220px); color:var(--accent);" aria-hidden="true">
+    <svg viewBox="0 0 220 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 54 L60 54" stroke="currentColor" stroke-width="2" opacity="0.3"/>
+      <path d="M16 42 L64 42" stroke="currentColor" stroke-width="2" opacity="0.45"/>
+      <path d="M28 30 L68 30" stroke="currentColor" stroke-width="2" opacity="0.6"/>
+      <path d="M90 60V22l20-8 20 8v38" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" opacity="0.8"/>
+      <path d="M90 34h40" stroke="currentColor" stroke-width="2.2" opacity="0.8"/>
+      <path d="M152 60l14-38 14 38" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" opacity="0.8"/>
+      <path d="M158 46h16" stroke="currentColor" stroke-width="2.2" opacity="0.8"/>
+    </svg>
+  </span>
+</header>
+
+<section class="panel panel-accent" id="doel-strive">
+  <div class="panel-inner">
+    <p class="lead-in display">WAAR HET OM DRAAIT</p>
+    <span class="sparkle" aria-hidden="true">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M12.3488 8.06625L9.1251 6.875L7.9376 3.64875C7.86728 3.45771 7.74005 3.29283 7.57307 3.17637C7.4061 3.0599 7.20743 2.99746 7.00385 2.99746C6.80027 2.99746 6.6016 3.0599 6.43462 3.17637C6.26765 3.29283 6.14042 3.45771 6.0701 3.64875L4.8751 6.875L1.64885 8.0625C1.45781 8.13282 1.29293 8.26005 1.17647 8.42702C1.06 8.594 0.997559 8.79267 0.997559 8.99625C0.997559 9.19983 1.06 9.3985 1.17647 9.56548C1.29293 9.73245 1.45781 9.85968 1.64885 9.93L4.8751 11.125L6.0626 14.3512C6.13292 14.5423 6.26015 14.7072 6.42712 14.8236C6.5941 14.9401 6.79277 15.0025 6.99635 15.0025C7.19993 15.0025 7.3986 14.9401 7.56557 14.8236C7.73255 14.7072 7.85978 14.5423 7.9301 14.3512L9.1251 11.125L12.3513 9.9375C12.5424 9.86718 12.7073 9.73995 12.8237 9.57298C12.9402 9.406 13.0026 9.20733 13.0026 9.00375C13.0026 8.80017 12.9402 8.6015 12.8237 8.43452C12.7073 8.26755 12.5424 8.14032 12.3513 8.07L12.3488 8.06625ZM8.5626 10.2638C8.49473 10.2888 8.4331 10.3282 8.38195 10.3793C8.3308 10.4305 8.29136 10.4921 8.26635 10.56L7.0001 13.9906L5.73635 10.5625C5.71138 10.4939 5.67169 10.4316 5.62008 10.38C5.56847 10.3284 5.50618 10.2887 5.4376 10.2638L2.00947 9L5.4376 7.73625C5.50618 7.71128 5.56847 7.67159 5.62008 7.61998C5.67169 7.56837 5.71138 7.50608 5.73635 7.4375L7.0001 4.00938L8.26385 7.4375C8.28886 7.50537 8.3283 7.567 8.37945 7.61815C8.4306 7.6693 8.49223 7.70874 8.5601 7.73375L11.9907 9L8.5626 10.2638ZM9.0001 2.5C9.0001 2.36739 9.05278 2.24021 9.14655 2.14645C9.24031 2.05268 9.36749 2 9.5001 2H10.5001V1C10.5001 0.867392 10.5528 0.740215 10.6465 0.646447C10.7403 0.552678 10.8675 0.5 11.0001 0.5C11.1327 0.5 11.2599 0.552678 11.3537 0.646447C11.4474 0.740215 11.5001 0.867392 11.5001 1V2H12.5001C12.6327 2 12.7599 2.05268 12.8537 2.14645C12.9474 2.24021 13.0001 2.36739 13.0001 2.5C13.0001 2.63261 12.9474 2.75979 12.8537 2.85355C12.7599 2.94732 12.6327 3 12.5001 3H11.5001V4C11.5001 4.13261 11.4474 4.25979 11.3537 4.35355C11.2599 4.44732 11.1327 4.5 11.0001 4.5C10.8675 4.5 10.7403 4.44732 10.6465 4.35355C10.5528 4.25979 10.5001 4.13261 10.5001 4V3H9.5001C9.36749 3 9.24031 2.94732 9.14655 2.85355C9.05278 2.75979 9.0001 2.63261 9.0001 2.5ZM15.5001 5.5C15.5001 5.63261 15.4474 5.75979 15.3537 5.85355C15.2599 5.94732 15.1327 6 15.0001 6H14.5001V6.5C14.5001 6.63261 14.4474 6.75979 14.3537 6.85355C14.2599 6.94732 14.1327 7 14.0001 7C13.8675 7 13.7403 6.94732 13.6465 6.85355C13.5528 6.75979 13.5001 6.63261 13.5001 6.5V6H13.0001C12.8675 6 12.7403 5.94732 12.6465 5.85355C12.5528 5.75979 12.5001 5.63261 12.5001 5.5C12.5001 5.36739 12.5528 5.24021 12.6465 5.14645C12.7403 5.05268 12.8675 5 13.0001 5H13.5001V4.5C13.5001 4.36739 13.5528 4.24021 13.6465 4.14645C13.7403 4.05268 13.8675 4 14.0001 4C14.1327 4 14.2599 4.05268 14.3537 4.14645C14.4474 4.24021 14.5001 4.36739 14.5001 4.5V5H15.0001C15.1327 5 15.2599 5.05268 15.3537 5.14645C15.4474 5.24021 15.5001 5.36739 15.5001 5.5Z" fill="currentColor"/></svg>
+    </span>
+    <blockquote class="display reveal">Elke topsporter die via Strive slaagt, moet dat zelf willen vertellen.</blockquote>
+    <p class="context">Dit is de kern waarop de hele strategie gebouwd is.</p>
+  </div>
+</section>
+
+<section id="strategie-strive">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="kicker display reveal">De rode draad</h2>
+    </div>
+    <div class="grid">
+      <div class="block block--paper span-2 reveal">
+        <p>De strategie werkt met verschillende formats die afwisselend gepost worden: dynamische video's, statische posts, en collabs met sporters wisselen elkaar af. Zo blijft de content gevarieerd en fris, en spreekt het telkens een net iets ander publiek of moment aan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="formats-strive">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="kicker display reveal">Drie vormen, één verhaal</h2>
+    </div>
+    <div class="grid">
+      <div class="block block--sky format-block reveal">
+        <span class="num">1</span>
+        <h3>Luchtige, informatieve video's met het team</h3>
+        <p>Luchtige, toegankelijke en informatieve video's met Sofie, Stef en Hendrik. Denk aan FAQ's, sterke hooks, actuele trends, en leuke momenten op kantoor. Uit één shoot halen we minstens 4-5 video's.</p>
+        <div class="shot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2.5" y="6" width="14" height="12" rx="2"/><path d="M16.5 10.5 21 8v8l-4.5-2.5"/></svg>voorbeeldbeeld: kantoormoment, direct in de camera</div>
+      </div>
+      <div class="block block--blush format-block reveal" style="--delay:0.08s">
+        <span class="num">2</span>
+        <h3>Testimonials met sporters</h3>
+        <p>Testimonials met sporters, waarin de sporter zelf vertelt over zijn of haar ervaring met Strive: hoe ze dit combineren met hun sport, en wat de pluspunten zijn. Dit wordt afgewisseld met dynamische sfeerbeelden van een training, die we dan eventueel kort mee opvolgen. Uit één shoot halen we minstens 1 testimonial-video.</p>
+        <p>Bij deze shoots nemen we, als er tijd voor is, ook enkele extra, kortere video's op in trend-stijl, zoals challenges. Denk bijvoorbeeld aan de trend waarbij iemand telkens moet kiezen tussen twee opties in een dilemma, tot er een winnaar overblijft. Dat kunnen we bijvoorbeeld toepassen op schoolvakken.</p>
+        <p>Ook nemen we tussendoor foto's, voor eventuele statische posts.</p>
+        <p>De testimonials zelf maken we bewust in hoge kwaliteit: clean en iets meer gepolijst. Dat verhoogt de kans dat de sporter dit zelf deelt op zijn of haar sociale media, en dat het management van de sporter (of wie hier verder nog bij betrokken is) dit toelaat.</p>
+        <div class="shot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2.5" y="6" width="14" height="12" rx="2"/><path d="M16.5 10.5 21 8v8l-4.5-2.5"/></svg>voorbeeldbeeld: sporter aan het woord, training op de achtergrond</div>
+      </div>
+      <div class="block block--sun format-block span-2 reveal" style="--delay:0.12s">
+        <span class="num">3</span>
+        <h3>"A day in the life"</h3>
+        <p>"A day in the life"-video's van de sporters, op afstand opgenomen. We moedigen de leerlingen aan om zelf enkele korte video's te filmen tijdens een dag waarop ze zowel training als les hebben. De leerkracht en de naam Strive komen hierin zeker naar voren. Dit format vraagt geen aparte shoot: Strive levert de beelden die van een sporter binnenkomen aan, en ik werk hier een afgewerkte video van af, versterkt met vaste branding-elementen en montage. Uit dit soort materiaal halen we minstens 1 afgewerkte video. Waar het beeldmateriaal zich ervoor leent, kan dit ook opgevraagd en toegevoegd worden aan de testimonials van Format 2.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="poststrategie-strive">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="kicker display reveal">Waar en wanneer</h2>
+    </div>
+    <div class="grid">
+      <div class="block block--mint span-2 reveal">
+        <p>We posten op Facebook, Instagram, TikTok en LinkedIn, met een afwisselend ritme:</p>
+        <div class="channels">
+          <span class="chip">Week 1 &middot; Format 1</span>
+          <span class="chip">Week 2 &middot; Format 3</span>
+          <span class="chip">Week 3 &middot; Format 2</span>
+          <span class="chip">Week 4 &middot; Format 1</span>
+          <span class="chip">Week 5 &middot; Format 1</span>
+        </div>
+        <p style="margin-top:16px;">En zo verder. Van Format 1 zullen er normaal gezien het meest video's zijn.</p>
+        <div class="channels" style="margin-top:6px;">
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 20l.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>Facebook</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2"/><path d="M17 7.2h.01"/></svg>Instagram</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 18a3.5 3.5 0 1 0 3.5 3.5V4c.6 2.4 2.4 4 5 4.3"/></svg>TikTok</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="8" width="17" height="12" rx="2"/><path d="M8 8V6.5A2.5 2.5 0 0 1 10.5 4h3A2.5 2.5 0 0 1 16 6.5V8"/></svg>LinkedIn</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="aanpak-stijl-strive">
+  <div class="wrap">
+    <div class="grid">
+      <div class="block block--sky reveal">
+        <h2 class="kicker display" style="font-size:1.5rem; margin-bottom:14px;">Hoe we het samen aanpakken</h2>
+        <p>We starten kort op elkaar met een shoot voor Format 1 en Format 2, zodat er meteen een voorraad content klaarstaat. Daarna gaan we over naar een doorlopend ritme van één shoot per maand (Format 1 of Format 2, afhankelijk van wat op dat moment het best past). Format 3 wordt niet gezien als een aparte shoot, maar als montagewerk op basis van beeldmateriaal dat Strive zelf aanlevert.</p>
+        <p>Strive staat zelf in contact met de sporters en regelt de afspraken en shootdagen met hen. Ideeën stemmen we samen af, waarna ik de callsheet en het draaiboek van een shoot opmaak. Dit wordt telkens nog eens afgestemd en goedgekeurd door Strive voor de shootdag zelf.</p>
+        <p>We houden ook goed in de gaten welke video's beter werken en meer bereik halen, en welke minder aanslaan. Sterkere video's kunnen we, indien dit binnen het budget past, eventueel ook extra ondersteunen via advertenties.</p>
+      </div>
+      <div class="block block--blush reveal" style="--delay:0.08s">
+        <h2 class="kicker display" style="font-size:1.5rem; margin-bottom:14px;">Hoe het moet aanvoelen</h2>
+        <p class="pull">Hoge kwaliteit, maar niet te gepolijst.</p>
+        <p>We mikken op beeld van hoge kwaliteit, maar niet te gepolijst: dat komt al snel te commercieel over, en daar kijken mensen minder graag naar (met uitzondering van de testimonials, die net wel dat extra polijsten verdienen). Voor de rest houden we het luchtig, toegankelijk en persoonlijk.</p>
+        <p>Vaste visuele elementen laten we constant terugkomen, voor herkenbaarheid en consistentie: denk aan ondertitels in de huisstijl, omkadering, tekstanimaties, en vaste overgangen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel panel-teal" id="next-strive">
+  <div class="panel-inner">
+    <p class="lead-in display">EEN VOLGENDE STAP, SAMEN</p>
+    <p class="cta-text" style="font-size:clamp(1.3rem,3vw,1.8rem); font-weight:700;">Als jullie zich hierin kunnen vinden, bespreken we graag nog wat er voor jullie zeker nog aan bod moet komen, en verwerken we dat mee in het plan. Daarna stellen we een concreet samenwerkingsplan op, maken we een offerte, en plannen we de eerste shoot in.</p>
+  </div>
+</section>
+
+</div>
+
 <footer>
   Dit voorstel is opgesteld door <strong>itsbyrune</strong>.
 </footer>
@@ -427,18 +678,45 @@
   (function(){
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var els = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+    var io = null;
     if(reduce || !('IntersectionObserver' in window)){
       els.forEach(function(el){ el.classList.add('is-visible'); });
-      return;
+    } else {
+      io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.16 });
+      els.forEach(function(el){ io.observe(el); });
     }
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.classList.add('is-visible');
-          io.unobserve(entry.target);
-        }
+
+    var root = document.documentElement;
+    var panels = {
+      inzicht: document.getElementById('brand-inzicht'),
+      strive: document.getElementById('brand-strive')
+    };
+    var buttons = {
+      inzicht: document.getElementById('btnInzicht'),
+      strive: document.getElementById('btnStrive')
+    };
+
+    function showBrand(name){
+      root.setAttribute('data-brand', name);
+      Object.keys(panels).forEach(function(key){
+        var isActive = key === name;
+        panels[key].hidden = !isActive;
+        buttons[key].setAttribute('aria-pressed', String(isActive));
       });
-    }, { threshold: 0.16 });
-    els.forEach(function(el){ io.observe(el); });
+      if(io){
+        panels[name].querySelectorAll('.reveal:not(.is-visible)').forEach(function(el){ io.observe(el); });
+      }
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    }
+
+    buttons.inzicht.addEventListener('click', function(){ showBrand('inzicht'); });
+    buttons.strive.addEventListener('click', function(){ showBrand('strive'); });
   })();
 </script>
