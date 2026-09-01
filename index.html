@@ -31,25 +31,16 @@
     --panel-line: rgba(53,1,27,0.14);
     --panel-ink: #35011B;
     --panel-ink-soft: #6B4A57;
+    /* Modern UI-card system (white cards, soft shadow, badges) */
+    --card-bg: #FFFFFF;
+    --card-border: rgba(20,10,15,0.08);
+    --card-shadow: 0 1px 2px rgba(20,10,15,0.04), 0 20px 36px -24px rgba(20,10,15,0.16);
+    --badge-bg: #F2EFF0;
+    --ink-strong: #14090F;
   }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --paper: #17090F;
-      --ink: #FBEDF3;
-      --ink-soft: #C79FAE;
-      --line: rgba(251,237,243,0.14);
-      --line-strong: rgba(242,142,180,0.35);
-      --logo-color: #FF6782;
-    }
-  }
-  :root[data-theme="dark"]{
-    --paper: #17090F;
-    --ink: #FBEDF3;
-    --ink-soft: #C79FAE;
-    --line: rgba(251,237,243,0.14);
-    --line-strong: rgba(242,142,180,0.35);
-    --logo-color: #FF6782;
-  }
+
+  /* This page is deliberately single-theme: always a white ground,
+     regardless of the viewer's OS light/dark setting. */
 
   /* ---------- Strive by Inzicht: the sportief sub-brand ----------
      Same logo, same fonts, same shared deep-teal "family" accent —
@@ -218,30 +209,30 @@
   }
   .grid.gap-tight{ gap: 14px; }
   .block{
-    border-radius: 20px;
-    padding: 34px 32px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--card-shadow);
+    border-radius: 22px;
+    padding: 30px 28px;
     transition: transform 0.35s ease, box-shadow 0.35s ease;
   }
   .block:hover{
     transform: translateY(-4px);
-    box-shadow: 0 18px 34px -22px rgba(53,1,27,0.35);
+    box-shadow: 0 1px 2px rgba(20,10,15,0.05), 0 28px 44px -22px rgba(20,10,15,0.22);
   }
   .block{ color: var(--panel-ink); }
   .block h2, .block h3{
     font-family: "Bricolage Grotesque", sans-serif;
     font-weight: 700;
     font-size: 1.1rem;
-    margin: 0 0 12px;
-    color: var(--panel-ink);
+    margin: 0 0 10px;
+    color: var(--ink-strong);
   }
   .block p{ color: var(--panel-ink-soft); }
   .block.span-2{ grid-column: 1 / -1; }
 
-  .block--paper{ background: var(--panel-base); border: 1px solid var(--panel-line); }
-  .block--blush{ background: var(--blush); }
-  .block--mint{ background: var(--mint); }
-  .block--sky{ background: var(--sky); }
-  .block--sun{ background: var(--sun); }
+  /* All card variants share one clean white surface now — the
+     accent lives in badges, checkmarks and the tag, not the fill. */
 
   .block .tag{
     display: inline-block;
@@ -254,22 +245,48 @@
   }
   .block--mint .tag{ color: var(--teal); }
 
-  .format-block{ position: relative; }
-  .format-block .num{
-    font-family: "Anton", sans-serif;
-    font-size: 2.4rem;
-    line-height: 1;
-    color: var(--accent);
-    opacity: 0.28;
-    position: absolute;
-    top: 26px;
-    right: 30px;
+  /* ---------- Badge pill ---------- */
+  .badge{
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--badge-bg);
+    color: var(--panel-ink-soft);
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 18px;
   }
 
+  /* ---------- Format cards ---------- */
+  .formats-row{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    align-items: stretch;
+  }
+  .format-block{ position: relative; display: flex; flex-direction: column; }
+  .format-block.is-featured{
+    background: var(--panel-base);
+    border-color: transparent;
+    box-shadow: 0 1px 2px rgba(20,10,15,0.05), 0 30px 50px -24px rgba(20,10,15,0.28);
+  }
+  .format-block.is-featured .badge{ background: var(--accent); color: #fff; }
+
+  /* ---------- Checklist ---------- */
+  .checklist{ list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .checklist li{ display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--panel-ink-soft); }
+  .checklist svg{ flex: none; width: 18px; height: 18px; margin-top: 1px; color: var(--accent); }
+
+  @media (max-width: 900px){
+    .formats-row{ grid-template-columns: 1fr; }
+  }
   @media (max-width: 720px){
     .grid{ grid-template-columns: 1fr; }
     .block.span-2{ grid-column: auto; }
-    .block{ padding: 28px 24px; }
+    .block{ padding: 26px 24px; }
   }
 
   /* ---------- Poststrategie channels ---------- */
@@ -449,22 +466,36 @@
     <div class="section-head">
       <h2 class="kicker display reveal">Drie vormen, één verhaal</h2>
     </div>
-    <div class="grid">
-      <div class="block block--sky format-block reveal">
-        <span class="num">1</span>
+    <div class="formats-row">
+      <div class="block format-block reveal">
+        <span class="badge">Format 1</span>
         <h3>Luchtige, informatieve video's met het team</h3>
         <p>Luchtige, toegankelijke en informatieve video's met het team van Inzicht. Denk aan uitleg over hoe de Examencommissie precies werkt, veelgestelde vragen, en een kijkje op de boerderij in Drongen. Uit één shoot halen we minstens 4-5 video's.</p>
+        <ul class="checklist">
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Uitleg hoe de Examencommissie precies werkt</li>
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Veelgestelde vragen</li>
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Een kijkje op de boerderij in Drongen</li>
+        </ul>
       </div>
-      <div class="block block--blush format-block reveal" style="--delay:0.08s">
-        <span class="num">2</span>
+      <div class="block format-block is-featured reveal" style="--delay:0.08s">
+        <span class="badge">Format 2</span>
         <h3>Testimonials met studenten</h3>
         <p>Testimonials met studenten, waarin ze zelf vertellen over hun ervaring: waarom ze voor Inzicht kozen, welke drempel ze overwonnen (examenstress, een moeilijke vorige schoolervaring, twijfel of het wel zou lukken), en hoe het traject hen geholpen heeft. Dit is een andere invalshoek dan bij Strive: geen combinatie met een sportcarrière, maar een persoonlijk, herkenbaar verhaal over doorzetten en vertrouwen vinden. Uit één shoot halen we minstens 1 testimonial-video.</p>
         <p>Ook hier geldt: als de tijd het toelaat, nemen we tussendoor kortere, luchtigere video's mee, en foto's voor statische posts.</p>
+        <ul class="checklist">
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Waarom ze voor Inzicht kozen</li>
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Welke drempel ze overwonnen</li>
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Hoe het traject hen geholpen heeft</li>
+        </ul>
       </div>
-      <div class="block block--sun format-block span-2 reveal" style="--delay:0.12s">
-        <span class="num">3</span>
+      <div class="block format-block reveal" style="--delay:0.16s">
+        <span class="badge">Format 3</span>
         <h3>"Een dag studeren met Inzicht"</h3>
         <p>Zelf gefilmde "een dag studeren met Inzicht"-video's: hoe een student een dag zelfstandig studeert via PLUS, of een dag beleeft op de boerderij binnen het MAX-traject. Dit toont heel concreet wat de twee trajecten praktisch inhouden, in plaats van het enkel te beschrijven.</p>
+        <ul class="checklist">
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Een dag zelfstandig studeren via PLUS</li>
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Een dag op de boerderij binnen MAX</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -590,26 +621,39 @@
     <div class="section-head">
       <h2 class="kicker display reveal">Drie vormen, één verhaal</h2>
     </div>
-    <div class="grid">
-      <div class="block block--sky format-block reveal">
-        <span class="num">1</span>
+    <div class="formats-row">
+      <div class="block format-block reveal">
+        <span class="badge">Format 1</span>
         <h3>Luchtige, informatieve video's met het team</h3>
         <p>Luchtige, toegankelijke en informatieve video's met Sofie, Stef en Hendrik. Denk aan FAQ's, sterke hooks, actuele trends, en leuke momenten op kantoor. Uit één shoot halen we minstens 4-5 video's.</p>
+        <ul class="checklist">
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>FAQ's</li>
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Sterke hooks &amp; actuele trends</li>
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Leuke momenten op kantoor</li>
+        </ul>
         <div class="shot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2.5" y="6" width="14" height="12" rx="2"/><path d="M16.5 10.5 21 8v8l-4.5-2.5"/></svg>voorbeeldbeeld: kantoormoment, direct in de camera</div>
       </div>
-      <div class="block block--blush format-block reveal" style="--delay:0.08s">
-        <span class="num">2</span>
+      <div class="block format-block is-featured reveal" style="--delay:0.08s">
+        <span class="badge">Format 2</span>
         <h3>Testimonials met sporters</h3>
         <p>Testimonials met sporters, waarin de sporter zelf vertelt over zijn of haar ervaring met Strive: hoe ze dit combineren met hun sport, en wat de pluspunten zijn. Dit wordt afgewisseld met dynamische sfeerbeelden van een training, die we dan eventueel kort mee opvolgen. Uit één shoot halen we minstens 1 testimonial-video.</p>
         <p>Bij deze shoots nemen we, als er tijd voor is, ook enkele extra, kortere video's op in trend-stijl, zoals challenges. Denk bijvoorbeeld aan de trend waarbij iemand telkens moet kiezen tussen twee opties in een dilemma, tot er een winnaar overblijft. Dat kunnen we bijvoorbeeld toepassen op schoolvakken.</p>
         <p>Ook nemen we tussendoor foto's, voor eventuele statische posts.</p>
         <p>De testimonials zelf maken we bewust in hoge kwaliteit: clean en iets meer gepolijst. Dat verhoogt de kans dat de sporter dit zelf deelt op zijn of haar sociale media, en dat het management van de sporter (of wie hier verder nog bij betrokken is) dit toelaat.</p>
+        <ul class="checklist">
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Hoe ze sport en studie combineren</li>
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Clean en gepolijst, klaar om zelf te delen</li>
+        </ul>
         <div class="shot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2.5" y="6" width="14" height="12" rx="2"/><path d="M16.5 10.5 21 8v8l-4.5-2.5"/></svg>voorbeeldbeeld: sporter aan het woord, training op de achtergrond</div>
       </div>
-      <div class="block block--sun format-block span-2 reveal" style="--delay:0.12s">
-        <span class="num">3</span>
+      <div class="block format-block reveal" style="--delay:0.16s">
+        <span class="badge">Format 3</span>
         <h3>"A day in the life"</h3>
         <p>"A day in the life"-video's van de sporters, op afstand opgenomen. We moedigen de leerlingen aan om zelf enkele korte video's te filmen tijdens een dag waarop ze zowel training als les hebben. De leerkracht en de naam Strive komen hierin zeker naar voren. Dit format vraagt geen aparte shoot: Strive levert de beelden die van een sporter binnenkomen aan, en ik werk hier een afgewerkte video van af, versterkt met vaste branding-elementen en montage. Uit dit soort materiaal halen we minstens 1 afgewerkte video. Waar het beeldmateriaal zich ervoor leent, kan dit ook opgevraagd en toegevoegd worden aan de testimonials van Format 2.</p>
+        <ul class="checklist">
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Zelf gefilmd door de sporter</li>
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Geen aparte shoot &mdash; montage op aangeleverd beeld</li>
+        </ul>
       </div>
     </div>
   </div>
