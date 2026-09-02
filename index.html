@@ -516,6 +516,27 @@
   }
   .mix-icon svg{ width: 24px; height: 24px; }
   .block > .mix-icon{ margin-bottom: 16px; }
+
+  /* ---------- Cross-posting note ---------- */
+  .cross-note{
+    margin-top: 16px;
+    padding: 14px 16px;
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    background: var(--badge-bg);
+  }
+  .cross-note-title{
+    display: block;
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--panel-ink-soft);
+    margin-bottom: 8px;
+  }
+  .cross-list{ list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .cross-list li{ font-size: 0.85rem; color: var(--panel-ink-soft); }
+  .cross-list b{ color: var(--ink-strong); }
   .mix-item span.mix-label{ font-size: 0.85rem; font-weight: 600; color: var(--ink-strong); line-height: 1.3; }
   .mix-plus{
     color: var(--panel-ink-soft);
@@ -742,6 +763,14 @@
             <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Sterke hooks &amp; actuele trends</li>
             <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Leuke momenten op kantoor</li>
           </ul>
+          <div class="cross-note">
+            <span class="cross-note-title">Ook bruikbaar voor Inzicht</span>
+            <ul class="cross-list">
+              <li><b>Beide merken relevant</b> &rarr; collab-post, zichtbaar op beide pagina's</li>
+              <li><b>Enkel Strive</b> &rarr; ook deelbaar op Inzicht</li>
+              <li><b>Enkel Inzicht</b> (reguliere examenstudenten) &rarr; exclusief op Inzicht</li>
+            </ul>
+          </div>
           <div class="shot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2.5" y="6" width="14" height="12" rx="2"/><path d="M16.5 10.5 21 8v8l-4.5-2.5"/></svg>voorbeeldbeeld: kantoormoment, direct in de camera</div>
         </div>
       </div>
