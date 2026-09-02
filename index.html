@@ -1375,7 +1375,7 @@
         function expandPanel(){
           isExpanding = true;
           var startHeight = details.offsetHeight + 'px';
-          var endHeight = (summaryEl.offsetHeight + details.querySelector('.examples-body').offsetHeight) + 'px';
+          var endHeight = details.scrollHeight + 'px';
           if(anim) anim.cancel();
           anim = details.animate({ height: [startHeight, endHeight] }, { duration: 350, easing: 'cubic-bezier(.16,1,.3,1)' });
           anim.onfinish = function(){ onFinish(true); };
