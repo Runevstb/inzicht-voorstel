@@ -18,6 +18,8 @@
     --line: rgba(33,37,41,0.13);
     --line-strong: rgba(255,0,141,0.3);
     --focus: #1F5FA8;
+    --ease: cubic-bezier(.16,1,.3,1);
+    --ease-reveal: cubic-bezier(.22,.61,.36,1);
     /* Strive's real brand tokens, lifted from their own .u-brand-strive
        CSS: neon-pink primary, deep-teal as the shared "family" accent
        with Inzicht. */
@@ -80,7 +82,7 @@
   .reveal{
     opacity: 0;
     transform: translateY(20px) scale(0.98);
-    transition: opacity 0.65s cubic-bezier(.22,.61,.36,1), transform 0.65s cubic-bezier(.22,.61,.36,1);
+    transition: opacity 0.65s var(--ease-reveal), transform 0.65s var(--ease-reveal);
     transition-delay: var(--delay, 0s);
   }
   .reveal.is-visible{ opacity: 1; transform: translateY(0) scale(1); }
@@ -109,6 +111,26 @@
     justify-content: center;
     text-align: center;
     padding: 100px 24px 56px;
+  }
+  @keyframes hero-in{
+    from{ opacity: 0; transform: translateY(16px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+  .hero > *{
+    animation: hero-in 0.8s var(--ease) backwards;
+  }
+  .hero > *:nth-child(1){ animation-delay: 0s; }
+  .hero > *:nth-child(2){ animation-delay: 0.08s; }
+  .hero > *:nth-child(3){ animation-delay: 0.14s; }
+  .hero > *:nth-child(4){ animation-delay: 0.22s; }
+  .hero > *:nth-child(5){ animation-delay: 0.3s; }
+  .hero > *:nth-child(6){ animation-delay: 0.38s; }
+  .hero > .sparkle.twirl{
+    animation: hero-in 0.8s var(--ease) backwards, twirl 6s ease-in-out infinite 0.8s;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero > *{ animation: none; }
+    .hero > .sparkle.twirl{ animation: none; }
   }
   .hero .eyebrow{
     font-size: clamp(1rem, 2.4vw, 1.2rem);
@@ -182,7 +204,7 @@
   .draw-connector path{
     stroke-dasharray: 220;
     stroke-dashoffset: 220;
-    transition: stroke-dashoffset 0.9s ease 0.3s;
+    transition: stroke-dashoffset 0.9s var(--ease) 0.3s;
   }
   .draw-connector.is-visible path{ stroke-dashoffset: 0; }
   @media (prefers-reduced-motion: reduce){
@@ -284,7 +306,7 @@
     box-shadow: var(--card-shadow);
     border-radius: 22px;
     padding: 30px 28px;
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
   }
   .block:hover{
     transform: translateY(-4px);
@@ -379,7 +401,7 @@
     color: transparent;
     -webkit-text-stroke: 2px var(--card-border);
     transform: scale(0.92);
-    transition: color 0.6s ease, -webkit-text-stroke-color 0.6s ease, transform 0.6s cubic-bezier(.22,.61,.36,1);
+    transition: color 0.6s var(--ease), -webkit-text-stroke-color 0.6s var(--ease), transform 0.6s var(--ease-reveal);
   }
   .step.is-active .step-num{
     color: var(--accent);
@@ -389,7 +411,7 @@
   .step-content > *{
     opacity: 0;
     transform: translateY(18px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
   }
   .step.is-active .step-content > *{ opacity: 1; transform: none; }
   .step-content > *:nth-child(1){ transition-delay: 0.05s; }
@@ -433,7 +455,7 @@
     color: var(--ink-strong);
     font-weight: 700;
     font-size: 1rem;
-    transition: transform 0.25s ease, border-color 0.25s ease;
+    transition: transform 0.25s var(--ease), border-color 0.25s var(--ease);
   }
   .channels .chip svg{ width: 22px; height: 22px; display: block; color: var(--teal); flex: none; }
   .channels .chip:hover{ transform: translateY(-3px); border-color: var(--accent); }
@@ -589,7 +611,7 @@
     border-color: var(--card-border);
     background: var(--badge-bg);
     text-decoration: none;
-    transition: border-color 0.25s ease, transform 0.25s ease;
+    transition: border-color 0.25s var(--ease), transform 0.25s var(--ease);
   }
   a.shot--ref svg:first-child{ margin-top: 2px; }
   a.shot--ref .ext{ margin-top: 2px; }
@@ -613,7 +635,7 @@
     font-weight: 600;
     font-size: 0.9rem;
     color: var(--ink-strong);
-    transition: border-color 0.25s ease;
+    transition: border-color 0.25s var(--ease);
   }
   .examples summary::-webkit-details-marker{ display: none; }
   .examples summary:hover{ border-color: var(--accent); }
@@ -623,7 +645,7 @@
     height: 16px;
     flex: none;
     color: var(--panel-ink-soft);
-    transition: transform 0.25s ease;
+    transition: transform 0.25s var(--ease);
   }
   .examples[open] summary .chev{ transform: rotate(180deg); }
   .examples summary .play{ width: 18px; height: 18px; flex: none; color: var(--accent); }
@@ -656,7 +678,27 @@
     font-size: 0.82rem;
     color: var(--ink-soft);
   }
+
+  /* ---------- Scroll progress ---------- */
+  .scroll-progress{
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 3px;
+    background: transparent;
+    z-index: 100;
+    pointer-events: none;
+  }
+  .scroll-progress span{
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    transform-origin: left;
+  }
 </style>
+
+<div class="scroll-progress" aria-hidden="true"><span id="scrollProgressBar"></span></div>
 
 <div id="brand-strive" class="brand-panel">
 
@@ -1080,6 +1122,19 @@
       updateProgress();
     }
 
+    var scrollBar = document.getElementById('scrollProgressBar');
+    if(scrollBar){
+      var updateScrollBar = function(){
+        var doc = document.documentElement;
+        var max = doc.scrollHeight - doc.clientHeight;
+        var pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+        scrollBar.style.width = pct + '%';
+      };
+      window.addEventListener('scroll', function(){ requestAnimationFrame(updateScrollBar); }, { passive: true });
+      window.addEventListener('resize', updateScrollBar);
+      updateScrollBar();
+    }
+
     function processInstagramEmbeds(){
       if(window.instgrm && window.instgrm.Embeds){
         window.instgrm.Embeds.process();
@@ -1105,6 +1160,49 @@
           }, 200);
         }
       });
+
+      // Smoothly animate the disclosure open/close instead of the native instant snap.
+      if(!reduce && 'animate' in details){
+        var summaryEl = details.querySelector('summary');
+        var anim = null, isClosing = false, isExpanding = false;
+        summaryEl.addEventListener('click', function(e){
+          e.preventDefault();
+          details.style.overflow = 'hidden';
+          if(isClosing || !details.open){ openPanel(); }
+          else if(isExpanding || details.open){ shrinkPanel(); }
+        });
+        function shrinkPanel(){
+          isClosing = true;
+          var startHeight = details.offsetHeight + 'px';
+          var endHeight = summaryEl.offsetHeight + 'px';
+          if(anim) anim.cancel();
+          anim = details.animate({ height: [startHeight, endHeight] }, { duration: 350, easing: 'cubic-bezier(.16,1,.3,1)' });
+          anim.onfinish = function(){ onFinish(false); };
+          anim.oncancel = function(){ isClosing = false; };
+        }
+        function openPanel(){
+          details.style.height = details.offsetHeight + 'px';
+          details.open = true;
+          requestAnimationFrame(function(){ requestAnimationFrame(expandPanel); });
+        }
+        function expandPanel(){
+          isExpanding = true;
+          var startHeight = details.offsetHeight + 'px';
+          var endHeight = (summaryEl.offsetHeight + details.querySelector('.examples-body').offsetHeight) + 'px';
+          if(anim) anim.cancel();
+          anim = details.animate({ height: [startHeight, endHeight] }, { duration: 350, easing: 'cubic-bezier(.16,1,.3,1)' });
+          anim.onfinish = function(){ onFinish(true); };
+          anim.oncancel = function(){ isExpanding = false; };
+        }
+        function onFinish(isOpen){
+          details.open = isOpen;
+          anim = null;
+          isClosing = false;
+          isExpanding = false;
+          details.style.height = '';
+          details.style.overflow = '';
+        }
+      }
     });
   })();
 </script>
