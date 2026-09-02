@@ -390,6 +390,72 @@
   a.shot--ref .ref-body{ flex: 1; min-width: 0; }
   a.shot--ref .ref-text{ color: var(--ink-strong); font-weight: 600; }
   a.shot--ref .ref-url{ display: block; color: var(--panel-ink-soft); font-size: 0.78rem; margin-top: 2px; }
+
+  /* ---------- Collapsible video examples ---------- */
+  .examples{ margin-top: 16px; }
+  .examples summary{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 12px 14px;
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    background: var(--badge-bg);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--ink-strong);
+    transition: border-color 0.25s ease;
+  }
+  .examples summary::-webkit-details-marker{ display: none; }
+  .examples summary:hover{ border-color: var(--accent); }
+  .examples summary .chev{
+    margin-left: auto;
+    width: 16px;
+    height: 16px;
+    flex: none;
+    color: var(--panel-ink-soft);
+    transition: transform 0.25s ease;
+  }
+  .examples[open] summary .chev{ transform: rotate(180deg); }
+  .examples summary .play{ width: 18px; height: 18px; flex: none; color: var(--accent); }
+  .examples-body{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-top: 16px;
+  }
+  .embed-card{ flex: 1 1 280px; max-width: 340px; }
+  .embed-card .frame{
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+    background: var(--badge-bg);
+    aspect-ratio: 9 / 15.5;
+  }
+  .embed-card iframe{
+    position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+    opacity: 0; transition: opacity 0.3s ease; z-index: 2;
+  }
+  .embed-card .frame.is-loaded iframe{ opacity: 1; }
+  .embed-card .frame.is-loaded .frame-placeholder{ display: none; }
+  .embed-card .frame-placeholder{
+    position: absolute; inset: 0; z-index: 1;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--panel-ink-soft);
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 20px;
+  }
+  .embed-card .caption{
+    display: block;
+    margin-top: 8px;
+    font-size: 0.82rem;
+    color: var(--panel-ink-soft);
+  }
+  .embed-card .caption a{ color: var(--panel-ink-soft); text-decoration: underline; text-underline-offset: 2px; }
   a.shot--ref .ext{ margin-left: auto; width: 16px; height: 16px; flex: none; color: var(--panel-ink-soft); }
 
   footer{
@@ -662,18 +728,29 @@
           <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Hoe ze sport en studie combineren</li>
           <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Clean en gepolijst, klaar om zelf te delen</li>
         </ul>
-        <div class="shot-group">
-          <a class="shot shot--ref" href="https://www.instagram.com/p/DcIxkzujMCa/" target="_blank" rel="noopener noreferrer">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2.5" y="6" width="14" height="12" rx="2"/><path d="M16.5 10.5 21 8v8l-4.5-2.5"/></svg>
-            <span class="ref-body"><span class="ref-text">Voorbeeld: training gecombineerd met de sporter die over de ervaring met Strive praat</span><span class="ref-url">instagram.com/p/DcIxkzujMCa</span></span>
-            <svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-          </a>
-          <a class="shot shot--ref" href="https://www.instagram.com/p/DAfZ8ZwNE59/" target="_blank" rel="noopener noreferrer">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2.5" y="6" width="14" height="12" rx="2"/><path d="M16.5 10.5 21 8v8l-4.5-2.5"/></svg>
-            <span class="ref-body"><span class="ref-text">Nog een voorbeeld van zo'n testimonial</span><span class="ref-url">instagram.com/p/DAfZ8ZwNE59</span></span>
-            <svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-          </a>
-        </div>
+        <details class="examples">
+          <summary>
+            <svg class="play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7-11-7Z"/></svg>
+            Bekijk inspiratie / voorbeelden
+            <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="examples-body">
+            <div class="embed-card">
+              <div class="frame">
+                <div class="frame-placeholder">Voorbeeld laadt bij openen &mdash; <a href="https://www.instagram.com/p/DcIxkzujMCa/" target="_blank" rel="noopener noreferrer" style="color:inherit;">of bekijk direct op Instagram ↗</a></div>
+                <iframe data-src="https://www.instagram.com/p/DcIxkzujMCa/embed/" title="Instagram-voorbeeld: training gecombineerd met testimonial" loading="lazy" allowtransparency="true"></iframe>
+              </div>
+              <span class="caption">Training gecombineerd met de sporter die over de ervaring met Strive praat &middot; <a href="https://www.instagram.com/p/DcIxkzujMCa/" target="_blank" rel="noopener noreferrer">open in Instagram ↗</a></span>
+            </div>
+            <div class="embed-card">
+              <div class="frame">
+                <div class="frame-placeholder">Voorbeeld laadt bij openen &mdash; <a href="https://www.instagram.com/p/DAfZ8ZwNE59/" target="_blank" rel="noopener noreferrer" style="color:inherit;">of bekijk direct op Instagram ↗</a></div>
+                <iframe data-src="https://www.instagram.com/p/DAfZ8ZwNE59/embed/" title="Instagram-voorbeeld: nog een testimonial" loading="lazy" allowtransparency="true"></iframe>
+              </div>
+              <span class="caption">Nog een voorbeeld van zo'n testimonial &middot; <a href="https://www.instagram.com/p/DAfZ8ZwNE59/" target="_blank" rel="noopener noreferrer">open in Instagram ↗</a></span>
+            </div>
+          </div>
+        </details>
       </div>
       <div class="block format-block reveal" style="--delay:0.16s">
         <span class="badge">Format 3</span>
@@ -791,5 +868,17 @@
 
     buttons.inzicht.addEventListener('click', function(){ showBrand('inzicht'); });
     buttons.strive.addEventListener('click', function(){ showBrand('strive'); });
+
+    document.querySelectorAll('details.examples').forEach(function(details){
+      details.addEventListener('toggle', function(){
+        if(!details.open) return;
+        details.querySelectorAll('iframe[data-src]').forEach(function(frame){
+          frame.src = frame.dataset.src;
+          frame.removeAttribute('data-src');
+          var wrap = frame.closest('.frame');
+          if(wrap) wrap.classList.add('is-loaded');
+        });
+      });
+    });
   })();
 </script>
