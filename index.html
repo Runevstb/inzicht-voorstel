@@ -374,6 +374,24 @@
   }
   .shot svg{ width: 20px; height: 20px; flex: none; color: var(--accent); }
 
+  .shot-group{ display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+  .shot-group .shot{ margin-top: 0; }
+  a.shot--ref{
+    align-items: flex-start;
+    border-style: solid;
+    border-color: var(--card-border);
+    background: var(--badge-bg);
+    text-decoration: none;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+  }
+  a.shot--ref svg:first-child{ margin-top: 2px; }
+  a.shot--ref .ext{ margin-top: 2px; }
+  a.shot--ref:hover{ border-color: var(--accent); transform: translateY(-2px); }
+  a.shot--ref .ref-body{ flex: 1; min-width: 0; }
+  a.shot--ref .ref-text{ color: var(--ink-strong); font-weight: 600; }
+  a.shot--ref .ref-url{ display: block; color: var(--panel-ink-soft); font-size: 0.78rem; margin-top: 2px; }
+  a.shot--ref .ext{ margin-left: auto; width: 16px; height: 16px; flex: none; color: var(--panel-ink-soft); }
+
   footer{
     padding: 34px 24px 46px;
     text-align: center;
@@ -644,7 +662,18 @@
           <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Hoe ze sport en studie combineren</li>
           <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Clean en gepolijst, klaar om zelf te delen</li>
         </ul>
-        <div class="shot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2.5" y="6" width="14" height="12" rx="2"/><path d="M16.5 10.5 21 8v8l-4.5-2.5"/></svg>voorbeeldbeeld: sporter aan het woord, training op de achtergrond</div>
+        <div class="shot-group">
+          <a class="shot shot--ref" href="https://www.instagram.com/p/DcIxkzujMCa/" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2.5" y="6" width="14" height="12" rx="2"/><path d="M16.5 10.5 21 8v8l-4.5-2.5"/></svg>
+            <span class="ref-body"><span class="ref-text">Voorbeeld: training gecombineerd met de sporter die over de ervaring met Strive praat</span><span class="ref-url">instagram.com/p/DcIxkzujMCa</span></span>
+            <svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+          <a class="shot shot--ref" href="https://www.instagram.com/p/DAfZ8ZwNE59/" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2.5" y="6" width="14" height="12" rx="2"/><path d="M16.5 10.5 21 8v8l-4.5-2.5"/></svg>
+            <span class="ref-body"><span class="ref-text">Nog een voorbeeld van zo'n testimonial</span><span class="ref-url">instagram.com/p/DAfZ8ZwNE59</span></span>
+            <svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+        </div>
       </div>
       <div class="block format-block reveal" style="--delay:0.16s">
         <span class="badge">Format 3</span>
