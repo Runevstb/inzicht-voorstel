@@ -234,6 +234,22 @@
   }
   .closing .cta-question{ margin: 0; }
 
+  /* ---------- Idea list (format guidance) ---------- */
+  .idea-list{ display: flex; flex-direction: column; gap: 16px; }
+  .idea{ display: flex; gap: 14px; align-items: flex-start; }
+  .idea-num{
+    flex: none;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--panel-base);
+    color: var(--accent);
+    font-family: "Anton", sans-serif;
+    font-size: 0.8rem;
+  }
+  .idea h4{ margin: 0 0 4px; font-size: 0.92rem; font-weight: 700; color: var(--ink-strong); }
+  .idea p{ margin: 0; font-size: 0.85rem; color: var(--panel-ink-soft); }
+
   /* ---------- Roadmap (next steps) ---------- */
   .roadmap{
     display: flex;
@@ -811,6 +827,50 @@
             <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Sterke hooks &amp; actuele trends</li>
             <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Leuke momenten op kantoor</li>
           </ul>
+          <details class="examples">
+            <summary>
+              <svg class="play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7-11-7Z"/></svg>
+              5 video-ideeën voor dit format
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <div class="idea-list">
+              <div class="idea">
+                <span class="idea-num">1</span>
+                <div>
+                  <h4>Snelle, dynamische rondleiding</h4>
+                  <p>Iemand van het team wandelt door het pand/de boerderij en legt kort per ruimte uit wat Inzicht en Strive doen. Snel tempo, dynamische cuts.</p>
+                </div>
+              </div>
+              <div class="idea">
+                <span class="idea-num">2</span>
+                <div>
+                  <h4>"Wist je dat..."-video's</h4>
+                  <p>Korte, snelle feitjes over de Examencommissie, studeren, of topsport-combinaties die de meeste mensen niet weten. Makkelijk herhaalbaar en zeer deelbaar.</p>
+                </div>
+              </div>
+              <div class="idea">
+                <span class="idea-num">3</span>
+                <div>
+                  <h4>Hendrik legt het uit aan iemand die het niet weet</h4>
+                  <p>Hendrik legt de werking van de Examencommissie uit aan iemand die er nog nooit van gehoord heeft, en de camera vangt de natuurlijke reactie.</p>
+                </div>
+              </div>
+              <div class="idea">
+                <span class="idea-num">4</span>
+                <div>
+                  <h4>FAQ als snelvuur-quiz</h4>
+                  <p>Iemand vuurt snel een reeks veelgestelde vragen af, het team moet razendsnel en kort antwoorden.</p>
+                </div>
+              </div>
+              <div class="idea">
+                <span class="idea-num">5</span>
+                <div>
+                  <h4>"Zou jij slagen?"-testje</h4>
+                  <p>Een luchtige quiz waarbij het team elkaar een typische Examencommissie-achtige vraag stelt, met humor in de foute antwoorden.</p>
+                </div>
+              </div>
+            </div>
+          </details>
           <div class="cross-note">
             <span class="cross-note-title">Ook bruikbaar voor Inzicht</span>
             <ul class="cross-list">
