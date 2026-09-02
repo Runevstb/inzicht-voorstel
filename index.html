@@ -234,6 +234,54 @@
   }
   .closing .cta-question{ margin: 0; }
 
+  /* ---------- Moodboard ---------- */
+  .moodboard{ display: flex; flex-wrap: wrap; gap: 14px; }
+  .mood-tile{
+    position: relative;
+    border-radius: 20px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+    box-shadow: 0 1px 2px rgba(20,10,15,0.04), 0 16px 30px -20px rgba(20,10,15,0.18);
+  }
+  .mood-tile:hover{ transform: rotate(0deg) translateY(-4px) scale(1.015); box-shadow: 0 1px 2px rgba(20,10,15,0.05), 0 26px 40px -20px rgba(20,10,15,0.26); }
+  .mood-tile.r1{ transform: rotate(-1.4deg); }
+  .mood-tile.r2{ transform: rotate(1.1deg); }
+  .mood-tile.r3{ transform: rotate(-0.6deg); }
+  .mood-tile.size-lg{ flex: 1 1 280px; aspect-ratio: 4 / 3; }
+  .mood-tile.size-md{ flex: 1 1 190px; aspect-ratio: 1 / 1; }
+  .mood-tile.size-wide{ flex: 2 1 340px; aspect-ratio: 20 / 9; }
+  .mood-tile.fill-accent{ background: var(--accent); color: #fff; }
+  .mood-tile.fill-teal{ background: var(--teal); color: #fff; }
+  .mood-tile.fill-ink{ background: var(--ink-strong); color: #fff; }
+  .mood-tile.fill-card{ background: var(--card-bg); border: 1px solid var(--card-border); color: var(--ink-strong); }
+  .mood-word{
+    font-family: "Anton", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    font-size: clamp(1.4rem, 3.2vw, 2rem);
+    line-height: 1.05;
+  }
+  .mood-tile .mood-tag{
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.65;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .mood-tile p{ margin: 0; font-size: 0.92rem; opacity: 0.85; }
+  .mood-tile .mood-icon{ position: absolute; top: 18px; right: 18px; width: 26px; height: 26px; opacity: 0.55; }
+  .mood-tile .mood-lines{ position: absolute; inset: 0; opacity: 0.5; }
+  @media (max-width: 560px){
+    .mood-tile.r1, .mood-tile.r2, .mood-tile.r3{ transform: none; }
+    .mood-tile:hover{ transform: translateY(-3px); }
+  }
+
   /* ---------- Idea list (format guidance) ---------- */
   .idea-list{ display: flex; flex-direction: column; gap: 16px; }
   .idea{ display: flex; gap: 14px; align-items: flex-start; }
@@ -1068,6 +1116,47 @@
           <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Tekstanimaties</li>
           <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"/></svg>Vaste overgangen</li>
         </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="moodboard-strive">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="kicker display reveal" style="font-size:clamp(1.4rem,3vw,2rem);">De sfeer, in één oogopslag</h2>
+      <p class="reveal" style="max-width:600px; color:var(--ink-soft);">Geen kant-en-klare stockfoto's, maar het gevoel waar we naar toe werken: dynamisch, natuurlijk licht, dicht op de huid.</p>
+    </div>
+    <div class="moodboard">
+      <div class="mood-tile size-wide fill-accent r1 reveal">
+        <span class="mood-word">Energie &amp; snelheid</span>
+      </div>
+      <div class="mood-tile size-md fill-ink r2 reveal" style="--delay:0.05s">
+        <span class="mood-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 17 L12 17 M4 12 L16 12 M4 7 L20 7"/></svg>
+        </span>
+        <span class="mood-word">In beweging</span>
+      </div>
+      <div class="mood-tile size-md fill-teal r3 reveal" style="--delay:0.1s">
+        <span class="mood-icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M12.3488 8.06625L9.1251 6.875L7.9376 3.64875C7.86728 3.45771 7.74005 3.29283 7.57307 3.17637C7.4061 3.0599 7.20743 2.99746 7.00385 2.99746C6.80027 2.99746 6.6016 3.0599 6.43462 3.17637C6.26765 3.29283 6.14042 3.45771 6.0701 3.64875L4.8751 6.875L1.64885 8.0625C1.45781 8.13282 1.29293 8.26005 1.17647 8.42702C1.06 8.594 0.997559 8.79267 0.997559 8.99625C0.997559 9.19983 1.06 9.3985 1.17647 9.56548C1.29293 9.73245 1.45781 9.85968 1.64885 9.93L4.8751 11.125L6.0626 14.3512C6.13292 14.5423 6.26015 14.7072 6.42712 14.8236C6.5941 14.9401 6.79277 15.0025 6.99635 15.0025C7.19993 15.0025 7.3986 14.9401 7.56557 14.8236C7.73255 14.7072 7.85978 14.5423 7.9301 14.3512L9.1251 11.125L12.3513 9.9375C12.5424 9.86718 12.7073 9.73995 12.8237 9.57298C12.9402 9.406 13.0026 9.20733 13.0026 9.00375C13.0026 8.80017 12.9402 8.6015 12.8237 8.43452C12.7073 8.26755 12.5424 8.14032 12.3513 8.07L12.3488 8.06625Z"/></svg>
+        </span>
+        <span class="mood-word">Echt</span>
+      </div>
+      <div class="mood-tile size-lg fill-card r2 reveal" style="--delay:0.15s">
+        <span class="mood-tag">Portret</span>
+        <p>Natuurlijk licht, dichtbij, oogcontact met de camera &mdash; geen studio-gevoel.</p>
+      </div>
+      <div class="mood-tile size-md fill-card r1 reveal" style="--delay:0.2s">
+        <span class="mood-tag">Actie</span>
+        <p>Motion blur, snelheid, middenin de beweging gevangen.</p>
+      </div>
+      <div class="mood-tile size-wide fill-card r3 reveal" style="--delay:0.25s">
+        <span class="mood-tag">Testimonial</span>
+        <p>Ingezoomd, eerlijk, geen poespas &mdash; de sporter zelf aan het woord.</p>
+      </div>
+      <div class="mood-tile size-md fill-accent r2 reveal" style="--delay:0.3s">
+        <span class="mood-word">Trots</span>
       </div>
     </div>
   </div>
